@@ -33,9 +33,6 @@ image_t load_png(char const *filepath)
         .height = surface->h
     };
     memcpy(result.data, surface->pixels, surface->w * surface->h * sizeof(*result.data));
-
-    memcpy (result.data + result.width * result.height, result.data, 
-            result.width * result.height * sizeof(*result.data));
     
     /* cleanup */
     SDL_FreeSurface(surface);	 
