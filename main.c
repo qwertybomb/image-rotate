@@ -59,10 +59,11 @@ int main(int argc, char **argv)
     SDL_Renderer * const renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
     /* create a texture */
-    SDL_Texture * const texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, 
+    SDL_Texture * const texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR8888, 
                                         SDL_TEXTUREACCESS_STREAMING, image.width, image.height);
 
-    int32_t scale = 1, scale_counter = 0;
+    int32_t scale = 0;
+    int32_t scale_counter = 0;
     for (bool quit = false; !quit; )
     {
         /* check for a quit event */
@@ -74,13 +75,13 @@ int main(int argc, char **argv)
             }
         }
 
-        SDL_Delay(5);
+        SDL_Delay(10);
 
         /* process the image */
         {
 
-            if (scale == 1)
-            {
+            if (scale == 0)
+            {              
                 scale = image.width / 2;
             }
             else
@@ -127,8 +128,9 @@ int main(int argc, char **argv)
                         }
                     }
                 }
-                
-                scale_counter = scale_counter + 1 > scale ? 0 : scale_counter + 1;
+
+                ++scale_counter;
+                scale_counter = scale_counter > scale ? 0 : scale_counter;
                 if (scale_counter == 0)
                 {
                     memcpy (image.data, image.data + image.width * image.height, 
