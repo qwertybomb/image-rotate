@@ -91,6 +91,7 @@ int main(int argc, char **argv)
                 {
                     for(int32_t x = 0; x < image.width; x += scale * 2)
                     {
+                        /* move the upper left block to the upper right block */
                         for(int32_t i = 0; i < scale; ++i)
                         {
                             memcpy (image.data + (i + y) * image.width + x +
@@ -99,6 +100,7 @@ int main(int argc, char **argv)
                                     sizeof(*image.data) * scale);
                         }
 
+                        /* move the lower right block to the lower left block */
                         for(int32_t i = 0; i < scale; ++i)
                         {
                             memcpy (image.data + (i + y + scale) * image.width + x + 
@@ -106,7 +108,8 @@ int main(int argc, char **argv)
                                     image.data + (i + y + scale) * image.width + x + scale,
                                     sizeof(*image.data) * scale); 
                         }
-                                            
+                            
+                        /* move the upper right block to the lower right block */                                            
                         for(int32_t i = 0; i < scale; ++i)
                         {
                             memcpy (image.data + (i + y + scale_counter) * image.width + x + 
@@ -115,7 +118,7 @@ int main(int argc, char **argv)
                                     sizeof(*image.data) * scale); 
                         }
                         
-                        
+                        /* move the lower left block the upper left block */
                         for(int32_t i = 0; i < scale; ++i)
                         {
                             memcpy (image.data + (i + y + (scale - scale_counter)) * image.width + x + image.width * image.height,
